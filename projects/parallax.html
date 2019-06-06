@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>PixiJS - Get Started</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="assets/js/pixi.min.js"></script>
+</head>
+<body>
+
+    <div id="pixi_wrapper" class="hero"></div>
+
+    <script>
+
+        let pixi_element = document.getElementById("pixi_wrapper");
+
+        let app = new PIXI.Application({
+            backgroundColor: 0xB8E5E1,
+            resizeTo: pixi_element
+        });
+
+        pixi_element.appendChild(app.view);
+
+        app.stage.interactive = true;
+
+        function setParallax(target, shiftX, shiftY){
+
+            app.stage.on('mousemove', parallaxMove.bind({
+                'target': target,
+                'rangeX': shiftX,
+                'maxX': target.x + (shiftX / 2),
+                'rangeY': shiftY,
+                'maxY': target.y + (shiftY / 2),
+            }));
+
+        }
+
+        function parallaxMove(event){
+
+            var mouseX = event.data.global.x;
+            var mouseY = event.data.global.y;
+
+            var ratioX = this.rangeX / app.screen.width;
+            var ratioY = this.rangeY / app.screen.height;
+
+            this.target.position.x = this.maxX - (ratioX * mouseX);
+            this.target.position.y = this.maxY - (ratioY * mouseY);
+
+        }
+
+        let clouds = PIXI.Sprite.from('assets/images/granny/clouds.png');
+        clouds.scale.x = 0.8;
+        clouds.scale.y = 0.8;
+        clouds.x = 50;
+        clouds.y = -150;
+        app.stage.addChild(clouds);
+        setParallax(clouds, 5, 4);
+
+        let hill = PIXI.Sprite.from('assets/images/granny/hill.png');
+        hill.scale.x = 0.75;
+        hill.scale.y = 0.75;
+        hill.x = 100;
+        hill.y = -160;
+        app.stage.addChild(hill);
+        setParallax(hill, 25, 20);
+
+        let people = PIXI.Sprite.from('assets/images/granny/people.png');
+        people.scale.x = 0.75;
+        people.scale.y = 0.75;
+        people.x = 100;
+        people.y = -160;
+        app.stage.addChild(people);
+        setParallax(people, 25, 20);
+
+        let dg = PIXI.Sprite.from('assets/images/granny/dg.png');
+        dg.scale.x = 0.7;
+        dg.scale.y = 0.7;
+        dg.x = 170;
+        dg.y = -120;
+        app.stage.addChild(dg);
+        setParallax(dg, 35, 30);
+
+        let trees = PIXI.Sprite.from('assets/images/granny/trees.png');
+        trees.x = -50;
+        trees.y = -100;
+        app.stage.addChild(trees);
+        setParallax(trees, 50, 40);
+
+    </script>
+</body>
+</html>

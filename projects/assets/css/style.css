@@ -1,0 +1,36 @@
+html, body {
+    height: 100%;
+    min-height: 100%;
+    margin:0;
+    padding: 0;
+    background-color: black;
+}
+
+.hero {
+    width: 1200px;
+    height: 800px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.hero div {
+    position: absolute;
+    top: 25%;
+    right: 25%;
+    bottom: 25%;
+    left: 25%;
+    background-color: #343434;
+    display: flex;
+    align-items: center;
+    padding: 6%;
+    text-align: center;
+    font-family: Raleway;
+    color: #fff;
+    font-size: 2rem;
+    line-height: 1.6;
+    pointer-events: none;
+}
+
+.hero div > * {
+    pointer-events: all;
+}

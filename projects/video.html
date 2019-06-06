@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>PixiJS - Get Started</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="assets/js/pixi.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pixi-filters@latest/dist/pixi-filters.js"></script>
+</head>
+<body>
+
+    <div id="pixi_wrapper" class="hero"></div>
+
+    <script>
+
+        let pixi_element = document.getElementById("pixi_wrapper");
+
+        let app = new PIXI.Application({
+            backgroundColor: 0xffffff,
+            resizeTo: pixi_element
+        });
+
+        pixi_element.appendChild(app.view);
+
+        let hexOrangeVideo = document.createElement('video');
+        hexOrangeVideo.src = 'assets/video/hexorange.mp4';
+        hexOrangeVideo.preload = true;
+        hexOrangeVideo.autoplay = true;
+        hexOrangeVideo.muted = true;
+        hexOrangeVideo.loop = true;
+
+        let hexOrangeVideoTexture = PIXI.Texture.from(hexOrangeVideo);
+
+        let hexOrangeVideoSprite = new PIXI.Sprite(hexOrangeVideoTexture);
+        hexOrangeVideoSprite.width = app.screen.width;
+        hexOrangeVideoSprite.height = app.screen.height;
+
+        app.stage.addChild(hexOrangeVideoSprite);
+
+        let circleVideo = document.createElement('video');
+        circleVideo.src = 'assets/video/circle.mp4';
+        circleVideo.preload = true;
+        circleVideo.autoplay = true;
+        circleVideo.muted = true;
+        circleVideo.loop = true;
+
+        let circleVideoTexture = PIXI.Texture.from(circleVideo);
+
+        let circleVideoSprite = new PIXI.Sprite(circleVideoTexture);
+        circleVideoSprite.width = app.screen.width;
+        circleVideoSprite.height = app.screen.height;
+
+        app.stage.addChild(circleVideoSprite);
+
+        let maskRadius = 250;
+        let maskBlur = 64;
+        let maskShape = new PIXI.Graphics().beginFill(0xffffff).drawCircle(maskBlur + maskRadius, maskBlur + maskRadius, maskRadius).endFill();
+        maskShape.filters = [new PIXI.filters.BlurFilter(maskBlur)];
+
+        let maskBounds = new PIXI.Rectangle(0, 0, (maskBlur + maskRadius) * 2, (maskBlur + maskRadius) * 2);
+
+        let texture = app.renderer.generateTexture(maskShape, PIXI.SCALE_MODES.NEAREST, 1, maskBounds);
+
+        let masker = new PIXI.Sprite(texture);
+
+        app.stage.addChild(masker);
+
+        circleVideoSprite.mask = masker;
+
+        app.stage.interactive = true;
+        app.stage.on('mousemove', moveMask);
+
+        function moveMask(event){
+            masker.position.x = event.data.global.x - masker.width / 2;
+            masker.position.y = event.data.global.y - masker.height / 2;
+        }
+
+    </script>
+</body>
+</html>

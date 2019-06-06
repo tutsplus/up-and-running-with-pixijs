@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>PixiJS - Get Started</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="assets/js/pixi.min.js"></script>
+</head>
+<body>
+
+    <div id="pixi_wrapper" class="hero"></div>
+
+    <script>
+        // PIXI.utils.sayHello("PixiJS is running");
+
+        let pixi_element = document.getElementById("pixi_wrapper");
+
+        /*let app = new PIXI.Application({
+            width: 1024,
+            height: 768,
+            backgroundColor: 0xff0000,
+            resizeTo: document.body
+        });
+
+        document.body.appendChild(app.view);*/
+
+        let app = new PIXI.Application({
+            backgroundColor: 0xffffff,
+            resizeTo: pixi_element
+        });
+
+        pixi_element.appendChild(app.view);
+
+        let addText = new PIXI.Text("Add some text to the stage");
+
+        app.stage.addChild(addText);
+
+        let addImage = PIXI.Sprite.from('assets/images/forest.jpg');
+
+        addImage.x = 100;
+        addImage.y = 100;
+
+        app.stage.addChild(addImage);
+
+    </script>
+</body>
+</html>

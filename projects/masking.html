@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>PixiJS - Get Started</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="assets/js/pixi.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pixi-filters@latest/dist/pixi-filters.js"></script>
+</head>
+<body>
+
+    <div id="pixi_wrapper" class="hero"></div>
+
+    <script>
+
+        let pixi_element = document.getElementById("pixi_wrapper");
+
+        let app = new PIXI.Application({
+            backgroundColor: 0xffffff,
+            resizeTo: pixi_element
+        });
+
+        pixi_element.appendChild(app.view);
+
+        let imageBW = PIXI.Sprite.from('assets/images/nebula.jpg');
+
+        app.stage.addChild(imageBW);
+
+        let imageColor = PIXI.Sprite.from('assets/images/nebula.jpg');
+
+        app.stage.addChild(imageColor);
+
+        var bwFilter = new PIXI.filters.AdjustmentFilter();
+        bwFilter.saturation = 0;
+        bwFilter.gamma = 0.8;
+        imageBW.filters = [bwFilter];
+
+        var colorFilter = new PIXI.filters.AdjustmentFilter();
+        colorFilter.gamma = 1.5;
+        imageColor.filters = [colorFilter];
+
+        let maskRadius = 250;
+        let maskBlur = 64;
+        let maskShape = new PIXI.Graphics().beginFill(0xffffff).drawCircle(maskBlur + maskRadius, maskBlur + maskRadius, maskRadius).endFill();
+        maskShape.filters = [new PIXI.filters.BlurFilter(maskBlur)];
+
+        let maskBounds = new PIXI.Rectangle(0, 0, (maskBlur + maskRadius) * 2, (maskBlur + maskRadius) * 2);
+
+        let texture = app.renderer.generateTexture(maskShape, PIXI.SCALE_MODES.NEAREST, 1, maskBounds);
+
+        let masker = new PIXI.Sprite(texture);
+
+        app.stage.addChild(masker);
+
+        imageColor.mask = masker;
+
+        app.stage.interactive = true;
+        app.stage.on('mousemove', moveMask);
+
+        function moveMask(event){
+            masker.position.x = event.data.global.x - masker.width / 2;
+            masker.position.y = event.data.global.y - masker.height / 2;
+        }
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>PixiJS - Get Started</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="assets/js/pixi.min.js"></script>
+</head>
+<body>
+
+    <div id="pixi_wrapper" class="hero"></div>
+
+    <script>
+
+        let pixi_element = document.getElementById("pixi_wrapper");
+
+        let app = new PIXI.Application({
+            backgroundColor: 0xffffff,
+            resizeTo: pixi_element
+        });
+
+        pixi_element.appendChild(app.view);
+
+        let centerX = app.screen.width / 2;
+        let centerY = app.screen.height / 2;
+
+        function createGradientTexture(){
+
+            let canvas = document.createElement('canvas');
+            canvas.width = app.screen.width;
+            canvas.height = app.screen.height;
+
+            let context = canvas.getContext('2d');
+
+            let gradient = context.createRadialGradient(
+                centerX, centerY, 0,
+                centerX, centerY, centerY
+            );
+
+            gradient.addColorStop(0.1, '#ff9a44');
+            gradient.addColorStop(0.99, '#fc6076');
+            gradient.addColorStop(1, '#1d1d1d');
+
+            context.fillStyle = gradient;
+            context.fillRect(0, 0, 1200, 800);
+
+            return PIXI.Texture.from(canvas);
+
+        }
+
+        let gradientTexture = createGradientTexture();
+
+        let sprite = new PIXI.Sprite(gradientTexture);
+        sprite.pivot.x = centerX;
+        sprite.pivot.y = centerY;
+        sprite.x = centerX;
+        sprite.y = centerY;
+
+        app.stage.addChild(sprite);
+
+    </script>
+</body>
+</html>

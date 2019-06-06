@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>PixiJS - Get Started</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="assets/js/pixi.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pixi-filters@latest/dist/pixi-filters.js"></script>
+</head>
+<body>
+
+    <div id="pixi_wrapper" class="hero"></div>
+
+    <script>
+
+        let pixi_element = document.getElementById("pixi_wrapper");
+
+        let app = new PIXI.Application({
+            backgroundColor: 0xffffff,
+            resizeTo: pixi_element
+        });
+
+        pixi_element.appendChild(app.view);
+
+        let forestImage = PIXI.Sprite.from('assets/images/forest.jpg');
+
+        app.stage.addChild(forestImage);
+
+        let godrayFilter = new PIXI.filters.GodrayFilter();
+        let colorFilter = new PIXI.filters.AdjustmentFilter();
+
+        godrayFilter.parallel = false;
+        godrayFilter.center = [630,300];
+        godrayFilter.lacunrity = 2.0;
+        godrayFilter.gain = 0.45;
+
+        colorFilter.contrast = 1.2;
+
+        forestImage.filters = [
+            godrayFilter,
+            colorFilter
+        ];
+
+        let animSpeed = 0;
+        app.ticker.add(function(){
+            animSpeed += 0.015;
+            godrayFilter.time = animSpeed;
+        });
+
+
+    </script>
+</body>
+</html>

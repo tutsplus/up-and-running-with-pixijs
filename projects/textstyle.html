@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>PixiJS - Get Started</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="assets/js/pixi.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Raleway|Playfair+Display" rel="stylesheet">
+</head>
+<body>
+
+    <div id="pixi_wrapper" class="hero"></div>
+
+    <script>
+
+        let pixi_element = document.getElementById("pixi_wrapper");
+
+        let app = new PIXI.Application({
+            backgroundColor: 0x1D1D1D,
+            resizeTo: pixi_element
+        });
+
+        pixi_element.appendChild(app.view);
+
+        const customCursor = "url('assets/images/customcursor.png'), auto";
+
+        app.renderer.plugins.interaction.cursorStyles.default = customCursor;
+
+        const style01 = new PIXI.TextStyle({
+            fontFamily: 'Raleway',
+            fontSize: 62,
+            fontStyle: 'italic',
+            fill: ['#ffffff', '#eeeeee'],
+            stroke: '#ffffff',
+            strokeThickness: 1,
+            dropShadow: true,
+            dropShadowAlpha: 1,
+            dropShadowColor: '#000000',
+            dropShadowBlur: 12,
+            dropShadowDistance: 10
+        });
+
+        const style02 = new PIXI.TextStyle({
+            fontFamily: 'Playfair Display',
+            fontSize: 150,
+            fontWeight: 'bold',
+            fill: '#DC0038',
+            stroke: '#4D091C',
+            strokeThickness: 3,
+            letterSpacing: 4,
+            dropShadow: true,
+            dropShadowAlpha: 0.75,
+            dropShadowColor: '#000000',
+            dropShadowBlur: 12,
+            dropShadowDistance: 10
+        });
+
+        let text01 = new PIXI.Text('Text Styling in', style01);
+        text01.x  = app.screen.width / 2 - text01.width / 2;
+        text01.y = app.screen.height / 2 - text01.height / 2 - 58;
+        app.stage.addChild(text01);
+
+        let text02 = new PIXI.Text('PixiJS', style02);
+        text02.x  = app.screen.width / 2 - text02.width / 2;
+        text02.y = app.screen.height / 2 - text02.height / 2 + 58;
+        app.stage.addChild(text02);
+
+    </script>
+</body>
+</html>

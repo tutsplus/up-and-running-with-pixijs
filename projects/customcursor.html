@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>PixiJS - Get Started</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="assets/js/pixi.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Raleway|Playfair+Display" rel="stylesheet">
+</head>
+<body>
+
+    <div id="pixi_wrapper" class="hero">
+        <div>
+            <p>Use the <em>pointer-events</em> CSS property to allow a PixiJS custom mouse to appear over a regular HTML element.</p>
+        </div>
+    </div>
+
+    <script>
+
+        let pixi_element = document.getElementById("pixi_wrapper");
+
+        let app = new PIXI.Application({
+            backgroundColor: 0x1D1D1D,
+            resizeTo: pixi_element
+        });
+
+        pixi_element.appendChild(app.view);
+
+        const customCursor = "url('assets/images/customcursor.png'), auto";
+
+        app.renderer.plugins.interaction.cursorStyles.default = customCursor;
+
+    </script>
+</body>
+</html>
